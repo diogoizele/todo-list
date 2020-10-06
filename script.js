@@ -54,15 +54,11 @@ function completeItem() {
 function validateLi() {
   if (item.value) {
     createNewItem();
-  } else {
-    alert("Não é possível gravar uma tarefa em branco!");
   }
 }
 
 function validateLiEnter(e) {
   if (item.value && e.which === 13) {
     createNewItem();
-  } else {
-    alert("Não é possível gravar uma tarefa em branco!");
-  }
+  } 
 }

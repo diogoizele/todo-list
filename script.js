@@ -45,6 +45,8 @@ function removeItem() {
       itens.forEach((elem, index) => {
         if ("×" + elem == li.textContent) {
           itens.splice(index, 1);
+          li.classList.remove("done-item");
+          itensComplete--;
         }
       });
       ul.removeChild(li);
@@ -57,6 +59,7 @@ function completeItem() {
     item.onclick = () => {
       if (!item.classList.contains("done-item")) {
         itensComplete++;
+        document.querySelector(".itensComplete p").innerHTML = itensComplete + "☑";
       }
       item.classList.add("done-item");
     };

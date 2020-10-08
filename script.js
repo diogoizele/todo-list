@@ -6,22 +6,23 @@ let itensComplete = 0;
 btn.addEventListener("click", validateLi);
 item.addEventListener("keypress", validateLiEnter);
 
-const itens = [];
+const itens = []; // tarefas
 
 function createNewItem() {
   let itemText = item.value;
+  if (itens.includes(itemText.toLowerCase())) {
+    alert("Essa tarefa já foi gravada! :)");
+    item.value = "";
+    return;
+  }
+  itens.push(itemText.toLowerCase());
+
   let li = document.createElement("li");
   let itemTextNode = document.createTextNode(itemText);
   let div = document.createElement("div");
   let closeButton = document.createTextNode("×");
 
   // testar se a tarefa já está escrita
-  if (itens.includes(itemText.toLowerCase())) {
-    alert("Essa tarefa já foi gravada! :)");
-    item.focus();
-    item.value = "";
-    return;
-  }
 
   div.appendChild(closeButton);
   div.classList.add("close-btn");
@@ -31,11 +32,10 @@ function createNewItem() {
   li.appendChild(itemTextNode);
   ul.appendChild(li);
 
-  itens.push(itemText);
 
+  item.value = "";
   removeItem();
   completeItem();
-  item.value = "";
 }
 
 function removeItem() {
@@ -43,7 +43,7 @@ function removeItem() {
     closeBtn.onclick = () => {
       let li = closeBtn.parentElement;
       itens.forEach((elem, index) => {
-        if ("×" + elem == li.textContent) {
+        if ("×" + elem == li.textContent.toLocaleLowerCase()) {
           itens.splice(index, 1);
           li.classList.remove("done-item");
           itensComplete--;
@@ -59,7 +59,8 @@ function completeItem() {
     item.onclick = () => {
       if (!item.classList.contains("done-item")) {
         itensComplete++;
-        document.querySelector(".itensComplete p").innerHTML = itensComplete + "☑";
+        document.querySelector(".itensComplete p").innerHTML =
+          itensComplete + "☑";
       }
       item.classList.add("done-item");
     };
